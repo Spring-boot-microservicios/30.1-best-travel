@@ -1,10 +1,7 @@
 package com.angelfg.best_travel.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -33,6 +30,8 @@ public class CustomerEntity implements Serializable {
     private Integer totalTours;
 
     // Un customer puede contener muchos tickets
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "customer",
         cascade = CascadeType.ALL,
@@ -42,6 +41,8 @@ public class CustomerEntity implements Serializable {
     private Set<TicketEntity> tickets;
 
     // Un customer puede contener muchas reservations
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "customer",
         cascade = CascadeType.ALL,
@@ -51,6 +52,8 @@ public class CustomerEntity implements Serializable {
     private Set<ReservationEntity> reservations;
 
     // Un customer puede contener muchos tours
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "customer",
         cascade = CascadeType.ALL,

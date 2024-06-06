@@ -1,10 +1,7 @@
 package com.angelfg.best_travel.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,6 +28,8 @@ public class HotelEntity implements Serializable {
     private BigDecimal price;
 
     // Un hotel puede contener muchas reservaciones
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "hotel",
         cascade = CascadeType.ALL,

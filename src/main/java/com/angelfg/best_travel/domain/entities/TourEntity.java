@@ -1,10 +1,7 @@
 package com.angelfg.best_travel.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -21,6 +18,8 @@ public class TourEntity implements Serializable {
     private Long id;
 
     // Un tour puede contener muchas reservaciones
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "tour",
         cascade = CascadeType.ALL,
@@ -30,6 +29,8 @@ public class TourEntity implements Serializable {
     private Set<ReservationEntity> reservations;
 
     // Un tour puede contener muchos tickets
+    @ToString.Exclude // Evita la recursividad infinita
+    @EqualsAndHashCode.Exclude // Evita la recursividad infinita
     @OneToMany(
         mappedBy = "tour",
         cascade = CascadeType.ALL,
