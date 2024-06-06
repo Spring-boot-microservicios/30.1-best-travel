@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity(name = "hotel")
 @Data
@@ -28,5 +29,14 @@ public class HotelEntity implements Serializable {
 
     private Integer rating;
     private BigDecimal price;
+
+    // Un hotel puede contener muchas reservaciones
+    @OneToMany(
+        mappedBy = "hotel",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // Trae todo el join
+        orphanRemoval = true // Eliminar los datos huerffanos
+    )
+    private Set<ReservationEntity> reservations;
 
 }
