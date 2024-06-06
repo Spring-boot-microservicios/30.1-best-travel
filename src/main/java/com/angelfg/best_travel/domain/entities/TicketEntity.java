@@ -35,4 +35,9 @@ public class TicketEntity implements Serializable {
     @JoinColumn(name = "fly_id")
     private FlyEntity fly;
 
+    // Muchos tickets pueden tener un tour y ser nullable
+    @ManyToOne
+    @JoinColumn(name = "tour_id", nullable = true)
+    private TourEntity tour;
+
 }

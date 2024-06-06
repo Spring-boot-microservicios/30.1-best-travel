@@ -35,4 +35,9 @@ public class ReservationEntity implements Serializable {
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;
 
+    // Muchas reservaciones pueden tener un tour y ser nullable
+    @ManyToOne
+    @JoinColumn(name = "tour_id", nullable = true)
+    private TourEntity tour;
+
 }
