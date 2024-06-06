@@ -1,14 +1,13 @@
 package com.angelfg.best_travel.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity(name = "customer")
 @Data
@@ -32,5 +31,32 @@ public class CustomerEntity implements Serializable {
     private Integer totalFlights;
     private Integer totalLodgings;
     private Integer totalTours;
+
+    // Un customer puede contener muchos tickets
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // Trae todo el join
+        orphanRemoval = true // Eliminar los datos huerffanos
+    )
+    private Set<TicketEntity> tickets;
+
+    // Un customer puede contener muchas reservations
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // Trae todo el join
+        orphanRemoval = true // Eliminar los datos huerffanos
+    )
+    private Set<ReservationEntity> reservations;
+
+    // Un customer puede contener muchos tours
+    @OneToMany(
+        mappedBy = "customer",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // Trae todo el join
+        orphanRemoval = true // Eliminar los datos huerffanos
+    )
+    private Set<TourEntity> tours;
 
 }

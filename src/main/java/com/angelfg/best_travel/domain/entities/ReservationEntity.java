@@ -40,4 +40,9 @@ public class ReservationEntity implements Serializable {
     @JoinColumn(name = "tour_id", nullable = true)
     private TourEntity tour;
 
+    // Muchas reservaciones pueden tener un customer
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
+
 }
