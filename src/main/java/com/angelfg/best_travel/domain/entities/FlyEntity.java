@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity(name = "fly")
 @Data
@@ -35,5 +36,14 @@ public class FlyEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private AeroLine aeroLine;
+
+    // Un vuelo puede contener muchos tickets
+    @OneToMany(
+        mappedBy = "fly",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.EAGER, // Trae todo el join
+        orphanRemoval = true // Eliminar los datos huerffanos
+    )
+    private Set<TicketEntity> tickets;
 
 }
