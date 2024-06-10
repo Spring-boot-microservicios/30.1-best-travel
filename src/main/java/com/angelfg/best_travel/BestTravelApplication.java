@@ -41,15 +41,20 @@ public class BestTravelApplication implements CommandLineRunner {
 //		log.info(String.valueOf(reservation));
 //		log.info(String.valueOf(customer));
 
-		this.flyRepository.selectLessPrice(BigDecimal.valueOf(20)).forEach(System.out::println);
+//		JPQL
+//		this.flyRepository.selectLessPrice(BigDecimal.valueOf(20)).forEach(System.out::println);
+//		System.out.println("---------------------------");
+//		this.flyRepository.selectBetweenPrice(BigDecimal.valueOf(10), BigDecimal.valueOf(15)).forEach(System.out::println);
+//		System.out.println("---------------------------");
+//		this.flyRepository.selectOriginDestiny("Grecia", "Mexico").forEach(System.out::println);
 
-		System.out.println("---------------------------");
+//		FlyEntity fly = flyRepository.findById(1L).get();
+//		log.info(String.valueOf(fly));
+//		fly.getTickets().stream().forEach(System.out::println);
 
-		this.flyRepository.selectBetweenPrice(BigDecimal.valueOf(10), BigDecimal.valueOf(15)).forEach(System.out::println);
-
-		System.out.println("---------------------------");
-
-		this.flyRepository.selectOriginDestiny("Grecia", "Mexico").forEach(System.out::println);
+//		JOIN FETCH -> para relacion entre tablas
+		FlyEntity fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
+		System.out.println(fly);
 
 	}
 
