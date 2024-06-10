@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -64,8 +66,51 @@ public class BestTravelApplication implements CommandLineRunner {
 //		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
 
 //		JOIN en lenguaje inclusivo de spring JPA
-		HotelEntity hotelEntity = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
-		System.out.println(hotelEntity);
+//		HotelEntity hotelEntity = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
+//		System.out.println(hotelEntity);
+
+		CustomerEntity customer = customerRepository.findById("GOTW771012HMRGR087").orElseThrow();
+		log.info("Client name: " + customer.getFullName());
+
+		FlyEntity fly = flyRepository.findById(11L).orElseThrow();
+		log.info("Fly: " + fly.getOriginName() + " - " + fly.getDestinyName());
+
+		HotelEntity hotel = hotelRepository.findById(3L).orElseThrow();
+		log.info("Hotel: " + hotel.getName());
+
+		TourEntity tour = TourEntity.builder()
+				.customer(customer)
+				.build();
+
+		log.info("Tour: " + tour);
+
+		TicketEntity ticket = TicketEntity.builder()
+				.id(UUID.randomUUID())
+				.price(fly.getPrice().multiply(BigDecimal.TEN))
+				.arrivalDate(LocalDateTime.now())
+				.departureDate(LocalDateTime.now())
+				.purchaseDate(LocalDate.now())
+				.customer(customer)
+				.tour(tour)
+				.fly(fly)
+				.build();
+
+		log.info("ticket: " + ticket);
+
+		ReservationEntity reservation = ReservationEntity.builder()
+				.id(UUID.randomUUID())
+				.dateTimeReservation(LocalDateTime.now())
+				.dateStart(LocalDate.now().plusDays(1))
+				.dateEnd(LocalDate.now().plusDays(2))
+				.hotel(hotel)
+				.customer(customer)
+				.tour(tour)
+				.totalDays(1)
+				.price(hotel.getPrice().multiply(BigDecimal.TEN))
+				.build();
+
+		log.info("reservation: " + reservation);
+
 
 	}
 
