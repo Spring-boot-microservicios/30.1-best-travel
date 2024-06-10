@@ -69,6 +69,11 @@ public class BestTravelApplication implements CommandLineRunner {
 //		HotelEntity hotelEntity = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
 //		System.out.println(hotelEntity);
 
+		addTourComplete();
+
+	}
+
+	private void addTourComplete() throws InterruptedException {
 		CustomerEntity customer = customerRepository.findById("GOTW771012HMRGR087").orElseThrow();
 		log.info("Client name: " + customer.getFullName());
 
@@ -111,7 +116,34 @@ public class BestTravelApplication implements CommandLineRunner {
 
 		log.info("reservation: " + reservation);
 
+		System.out.println("-------SAVING-------");
 
+		// Genera las relaciones para realizar el guardado correctamente
+		tour.addReservation(reservation);
+		tour.updateReservation();
+
+		tour.addTicket(ticket);
+		tour.updateTicket();
+
+		TourEntity tourSaved = this.tourRepository.save(tour);
+		System.out.println("Tour generado: " + tourSaved);
+
+		Thread.sleep(8000);
+
+		// No elimina por que el fetch es de tipo EAGER => cambiar a LAZY
+		this.tourRepository.deleteById(tourSaved.getId());
+
+		/**
+		 * PRUEBAS EN DB DEL SAVE
+		 * select * from tour;
+		 *
+		 * truncate table tour cascade; // Limpia en cascada las relaciones que contiene
+		 *
+		 * select * from tour t
+		 * 	join reservation r on t.id = r.tour_id
+		 * 	join hotel h on h.id = r.hotel_id
+		 * 	join customer c on c.dni = r.customer_id;
+		 */
 	}
 
 }

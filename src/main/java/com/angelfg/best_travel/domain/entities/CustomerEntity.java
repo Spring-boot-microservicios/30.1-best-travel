@@ -57,7 +57,7 @@ public class CustomerEntity implements Serializable {
     @OneToMany(
         mappedBy = "customer",
         cascade = CascadeType.ALL,
-        fetch = FetchType.EAGER, // Trae todo el join
+        fetch = FetchType.LAZY, // Trae todo el join
         orphanRemoval = true // Eliminar los datos huerffanos
     )
     private Set<TourEntity> tours;
