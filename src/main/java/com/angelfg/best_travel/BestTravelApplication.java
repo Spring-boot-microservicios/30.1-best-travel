@@ -61,7 +61,11 @@ public class BestTravelApplication implements CommandLineRunner {
 //		Lenguaje inclusivo de spring JPQL
 //		hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(System.out::println);
 //		hotelRepository.findByPriceIsBetween(BigDecimal.valueOf(100), BigDecimal.valueOf(200)).forEach(System.out::println);
-		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
+//		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
+
+//		JOIN en lenguaje inclusivo de spring JPA
+		HotelEntity hotelEntity = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
+		System.out.println(hotelEntity);
 
 	}
 
