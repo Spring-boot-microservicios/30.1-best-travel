@@ -69,7 +69,7 @@ public class BestTravelApplication implements CommandLineRunner {
 //		HotelEntity hotelEntity = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
 //		System.out.println(hotelEntity);
 
-		addTourComplete();
+//		addTourComplete();
 
 	}
 
