@@ -59,7 +59,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public TicketResponse read(UUID uuid) {
-        return null;
+        TicketEntity ticketFromDB = this.ticketRepository
+                .findById(uuid)
+                .orElseThrow();
+
+        return this.entityToResponse(ticketFromDB);
     }
 
     @Override

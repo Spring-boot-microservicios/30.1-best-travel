@@ -5,10 +5,9 @@ import com.angelfg.best_travel.api.dtos.response.TicketResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 // @Controller => para cuando usamos el MVC para vistas
 @RestController
@@ -21,6 +20,11 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<TicketResponse> create(@RequestBody TicketRequest ticketRequest) {
         return ResponseEntity.ok(this.ticketService.create(ticketRequest));
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<TicketResponse> get(@PathVariable UUID id) {
+        return ResponseEntity.ok(this.ticketService.read(id));
     }
 
 }
