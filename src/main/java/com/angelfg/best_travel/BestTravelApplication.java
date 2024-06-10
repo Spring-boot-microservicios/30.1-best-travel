@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -53,8 +54,14 @@ public class BestTravelApplication implements CommandLineRunner {
 //		fly.getTickets().stream().forEach(System.out::println);
 
 //		JOIN FETCH -> para relacion entre tablas
-		FlyEntity fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
-		System.out.println(fly);
+//		FlyEntity fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
+//		System.out.println(fly);
+
+//		JPQL palabras propias para realizar queries
+//		Lenguaje inclusivo de spring JPQL
+//		hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(System.out::println);
+//		hotelRepository.findByPriceIsBetween(BigDecimal.valueOf(100), BigDecimal.valueOf(200)).forEach(System.out::println);
+		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
 
 	}
 
