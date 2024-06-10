@@ -59,6 +59,10 @@ public class TourEntity implements Serializable {
         this.tickets.removeIf(ticket -> ticket.getId().equals(id));
     }
 
+    // Ciclos de vida de spring (deben ser void, no deben llevar parametros y no usar en varios metodos)
+    // @PreRemove // Se ejecuta antes de que sea eliminado
+    // @PreUpdate // Se ejecuta antes de que sea actualizada
+    // @PrePersist // Se ejecuta una vez que se quiera guardar en DB
     public void updateTicket() {
         // seteamos los datos en la entity
         this.tickets.forEach(ticket -> ticket.setTour(this));
