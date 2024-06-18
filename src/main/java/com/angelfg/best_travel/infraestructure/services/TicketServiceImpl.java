@@ -88,8 +88,9 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void delete(UUID uuid) {
-
+    public void delete(UUID id) {
+        TicketEntity ticketToDelete = this.ticketRepository.findById(id).orElseThrow();
+        this.ticketRepository.delete(ticketToDelete);
     }
 
     // Realizar el mapeo entre entities a dtos

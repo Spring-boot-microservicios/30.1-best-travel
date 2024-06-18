@@ -1,9 +1,6 @@
 package com.angelfg.best_travel.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,17 +28,17 @@ public class TicketEntity implements Serializable {
     private BigDecimal price;
 
     // Muchos tickets pueden contener un vuelo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Sino es LAZY no borrara con el delete
     @JoinColumn(name = "fly_id")
     private FlyEntity fly;
 
     // Muchos tickets pueden tener un tour y ser nullable
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Sino es LAZY no borrara con el delete
     @JoinColumn(name = "tour_id", nullable = true)
     private TourEntity tour;
 
     // Muchos tickets pueden contener un customer
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Sino es LAZY no borrara con el delete
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
