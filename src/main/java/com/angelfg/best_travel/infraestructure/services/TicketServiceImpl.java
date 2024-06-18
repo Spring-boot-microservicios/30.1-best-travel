@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -67,8 +68,23 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketResponse update(TicketRequest request, UUID uuid) {
-        return null;
+    public TicketResponse update(TicketRequest request, UUID id) {
+        TicketEntity ticketToUpdate = this.ticketRepository.findById(id).orElseThrow();
+
+        FlyEntity fly = this.flyRepository
+                .findById(request.getIdFly())
+                .orElseThrow();
+
+        ticketToUpdate.setFly(fly);
+        ticketToUpdate.setPrice(BigDecimal.valueOf(0.25));
+        ticketToUpdate.setDepartureDate(LocalDateTime.now());
+        ticketToUpdate.setArrivalDate(LocalDateTime.now());
+
+        TicketEntity ticketUpdated = this.ticketRepository.save(ticketToUpdate);
+
+        log.info("Ticket updated with id {}", ticketUpdated.getId());
+
+        return this.entityToResponse(ticketUpdated);
     }
 
     @Override
