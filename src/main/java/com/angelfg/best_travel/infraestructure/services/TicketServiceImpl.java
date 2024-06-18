@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,6 +26,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Slf4j
 public class TicketServiceImpl implements TicketService {
+
+    public static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.25);
 
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
@@ -46,7 +47,7 @@ public class TicketServiceImpl implements TicketService {
                 .id(UUID.randomUUID())
                 .fly(fly)
                 .customer(customer)
-                .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+                .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
                 .purchaseDate(LocalDate.now())
                 .arrivalDate(LocalDateTime.now())
                 .departureDate(LocalDateTime.now())
@@ -76,7 +77,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow();
 
         ticketToUpdate.setFly(fly);
-        ticketToUpdate.setPrice(BigDecimal.valueOf(0.25));
+        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
         ticketToUpdate.setDepartureDate(LocalDateTime.now());
         ticketToUpdate.setArrivalDate(LocalDateTime.now());
 
@@ -91,6 +92,12 @@ public class TicketServiceImpl implements TicketService {
     public void delete(UUID id) {
         TicketEntity ticketToDelete = this.ticketRepository.findById(id).orElseThrow();
         this.ticketRepository.delete(ticketToDelete);
+    }
+
+    @Override
+    public BigDecimal findPrice(Long flyId) {
+        FlyEntity fly = this.flyRepository.findById(flyId).orElseThrow();
+        return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)); // porcentaje
     }
 
     // Realizar el mapeo entre entities a dtos
