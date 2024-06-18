@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TicketRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
+import com.angelfg.best_travel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -49,8 +49,8 @@ public class TicketServiceImpl implements TicketService {
                 .customer(customer)
                 .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
                 .purchaseDate(LocalDate.now())
-                .arrivalDate(LocalDateTime.now())
-                .departureDate(LocalDateTime.now())
+                .departureDate(BestTravelUtil.getRandomSoon())
+                .arrivalDate(BestTravelUtil.getRandomLater())
                 .build();
 
         TicketEntity ticketPersisted = this.ticketRepository.save(ticketToPersist);
@@ -78,8 +78,8 @@ public class TicketServiceImpl implements TicketService {
 
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
-        ticketToUpdate.setDepartureDate(LocalDateTime.now());
-        ticketToUpdate.setArrivalDate(LocalDateTime.now());
+        ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
+        ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLater());
 
         TicketEntity ticketUpdated = this.ticketRepository.save(ticketToUpdate);
 
