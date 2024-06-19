@@ -56,17 +56,40 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationResponse read(UUID uuid) {
-        return null;
+        ReservationEntity reservationFromDB = this.reservationRepository
+                .findById(uuid)
+                .orElseThrow();
+
+        return this.entityToResponse(reservationFromDB);
     }
 
     @Override
-    public ReservationResponse update(ReservationRequest request, UUID uuid) {
-        return null;
+    public ReservationResponse update(ReservationRequest request, UUID id) {
+        HotelEntity hotel = this.hotelRepository.findById(request.getIdHotel()).orElseThrow();
+        ReservationEntity reservationToUpdate = this.reservationRepository.findById(id).orElseThrow();
+
+        reservationToUpdate.setHotel(hotel);
+        reservationToUpdate.setTotalDays(request.getTotalDays());
+        reservationToUpdate.setDateTimeReservation(LocalDateTime.now());
+        reservationToUpdate.setDateStart(LocalDate.now());
+        reservationToUpdate.setDateEnd(LocalDate.now().plusDays(request.getTotalDays()));
+        reservationToUpdate.setPrice(hotel.getPrice().add(hotel.getPrice().multiply(charges_price_percentage)));
+
+        ReservationEntity reservationUpdated = this.reservationRepository.save(reservationToUpdate);;
+
+        return this.entityToResponse(reservationUpdated);
     }
 
     @Override
-    public void delete(UUID uuid) {
+    public void delete(UUID id) {
+        ReservationEntity reservationToDelete = this.reservationRepository.findById(id).orElseThrow();
+        this.reservationRepository.delete(reservationToDelete);
+    }
 
+    @Override
+    public BigDecimal findPrice(Long hotelId) {
+        HotelEntity hotelEntity = this.hotelRepository.findById(hotelId).orElseThrow();
+        return hotelEntity.getPrice().add(hotelEntity.getPrice().multiply(charges_price_percentage));
     }
 
     // Realizar el mapeo entre entities a dtos

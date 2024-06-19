@@ -5,10 +5,12 @@ import com.angelfg.best_travel.api.dtos.response.ReservationResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "reservation")
@@ -20,6 +22,27 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<ReservationResponse> post(@RequestBody ReservationRequest request) {
         return ResponseEntity.ok(this.reservationService.create(request));
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ReservationResponse> get(@PathVariable UUID id) {
+        return ResponseEntity.ok(this.reservationService.read(id));
+    }
+
+    @PutMapping(path = "{id}")
+    public ResponseEntity<ReservationResponse> put(@PathVariable UUID id, @RequestBody ReservationRequest request) {
+        return ResponseEntity.ok(this.reservationService.update(request, id));
+    }
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        this.reservationService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Map<String, BigDecimal>> getHotelPrice(@RequestParam Long hotelId) {
+        return ResponseEntity.ok(Collections.singletonMap("hotelPrice", this.reservationService.findPrice(hotelId)));
     }
 
 }

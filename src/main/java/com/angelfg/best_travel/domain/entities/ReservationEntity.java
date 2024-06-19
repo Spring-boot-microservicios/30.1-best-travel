@@ -31,17 +31,17 @@ public class ReservationEntity implements Serializable {
     private BigDecimal price;
 
     // Muchas reservaciones se encuentran en un hotel
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // No borra si usamos el delete
     @JoinColumn(name = "hotel_id")
     private HotelEntity hotel;
 
     // Muchas reservaciones pueden tener un tour y ser nullable
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // No borra si usamos el delete
     @JoinColumn(name = "tour_id", nullable = true)
     private TourEntity tour;
 
     // Muchas reservaciones pueden tener un customer
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // No borra si usamos el delete
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
