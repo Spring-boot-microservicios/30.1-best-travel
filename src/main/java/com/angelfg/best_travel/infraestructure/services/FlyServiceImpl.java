@@ -1,0 +1,63 @@
+package com.angelfg.best_travel.infraestructure.services;
+
+import com.angelfg.best_travel.api.dtos.response.FlyResponse;
+import com.angelfg.best_travel.domain.entities.FlyEntity;
+import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
+import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
+import com.angelfg.best_travel.util.enums.SortType;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Set;
+
+@Service
+@Transactional
+@AllArgsConstructor
+@Slf4j
+public class FlyServiceImpl implements FlyService {
+
+    private final FlyRepository flyRepository;
+
+    @Override
+    public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {
+        return Set.of();
+    }
+
+    @Override
+    public Page<FlyResponse> readAll(Integer page, Integer size, SortType sortType) {
+        PageRequest pageRequest = null;
+
+        switch (sortType) {
+            case NONE -> pageRequest = PageRequest.of(page, size);
+            case LOWER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
+            case UPPER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+        }
+
+        return this.flyRepository.findAll(pageRequest).map(this::entityToResponse);
+    }
+
+    @Override
+    public Set<FlyResponse> readLessPrice(BigDecimal price) {
+        return Set.of();
+    }
+
+    @Override
+    public Set<FlyResponse> readBetweenPrice(BigDecimal min, BigDecimal max) {
+        return Set.of();
+    }
+
+    private FlyResponse entityToResponse(FlyEntity entity) {
+        FlyResponse flyResponse = new FlyResponse();
+        BeanUtils.copyProperties(entity, flyResponse);
+
+        return flyResponse;
+    }
+
+}
