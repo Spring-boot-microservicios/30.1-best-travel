@@ -77,8 +77,14 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public TourResponse read(Long aLong) {
-        return null;
+    public TourResponse read(Long id) {
+        TourEntity tourFromDB = this.tourRepository.findById(id).orElseThrow();
+
+        return TourResponse.builder()
+                .id(tourFromDB.getId())
+                .reservationIds(tourFromDB.getReservations().stream().map(ReservationEntity::getId).collect(Collectors.toSet()))
+                .ticketIds(tourFromDB.getTickets().stream().map(TicketEntity::getId).collect(Collectors.toSet()))
+                .build();
     }
 
     @Override
@@ -87,8 +93,9 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void delete(Long aLong) {
-
+    public void delete(Long id) {
+        TourEntity tourToDelete = this.tourRepository.findById(id).orElseThrow();
+        this.tourRepository.delete(tourToDelete);
     }
 
 }
