@@ -55,6 +55,21 @@ public class TourEntity implements Serializable {
         this.reservations.forEach(reservation -> reservation.setTour(this));
     }
 
+    public void removeTicket(UUID id) {
+        this.tickets.forEach(ticket -> {
+            if (ticket.getId().equals(id)) {
+                ticket.setTour(null);
+            }
+        });
+    }
+
+    public void addTicket(TicketEntity ticket) {
+        if (Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
+
+        this.tickets.add(ticket);
+        this.tickets.forEach(t -> t.setTour(this));
+    }
+
 //    public void addTicket(TicketEntity ticket) {
 //        if (Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
 //

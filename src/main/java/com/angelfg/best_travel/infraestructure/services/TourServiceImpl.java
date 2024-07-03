@@ -32,17 +32,25 @@ public class TourServiceImpl implements TourService {
     private final TourHelper tourHelper;
 
     @Override
-    public void removeTicket(UUID ticketId, Long tourId) {
-
+    public void removeTicket(Long tourId, UUID ticketId) {
+        TourEntity tourUpdate = this.tourRepository.findById(tourId).orElseThrow();
+        tourUpdate.removeTicket(ticketId);
+        this.tourRepository.save(tourUpdate);
     }
 
     @Override
-    public UUID addTicket(Long flyId, Long tourId) {
-        return null;
+    public UUID addTicket(Long tourId, Long flyId) {
+        TourEntity tourEntity = this.tourRepository.findById(tourId).orElseThrow();
+        FlyEntity fly = this.flyRepository.findById(flyId).orElseThrow();
+        TicketEntity ticket = this.tourHelper.createTicket(fly, tourEntity.getCustomer());
+        tourEntity.addTicket(ticket);
+        this.tourRepository.save(tourEntity);
+
+        return ticket.getId();
     }
 
     @Override
-    public void removeReservation(UUID reservationId, Long tourId) {
+    public void removeReservation(Long tourId, UUID reservationId) {
 
     }
 
