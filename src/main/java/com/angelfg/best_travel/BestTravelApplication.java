@@ -119,11 +119,11 @@ public class BestTravelApplication implements CommandLineRunner {
 		System.out.println("-------SAVING-------");
 
 		// Genera las relaciones para realizar el guardado correctamente
-		tour.addReservation(reservation);
-		tour.updateReservation();
+//		tour.addReservation(reservation);
+//		tour.updateReservation();
 
-		tour.addTicket(ticket);
-		tour.updateTicket();
+//		tour.addTicket(ticket);
+//		tour.updateTicket();
 
 		TourEntity tourSaved = this.tourRepository.save(tour);
 		System.out.println("Tour generado: " + tourSaved);
