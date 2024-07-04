@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TicketRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
+import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.util.BestTravelUtil;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class TicketServiceImpl implements TicketService {
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
+    private final CustomerHelper customerHelper;
 
     @Override
     public TicketResponse create(TicketRequest request) {
@@ -55,6 +57,8 @@ public class TicketServiceImpl implements TicketService {
 
         TicketEntity ticketPersisted = this.ticketRepository.save(ticketToPersist);
         log.info("Ticket saved with id: {}", ticketPersisted.getId());
+
+        this.customerHelper.increase(customer.getDni(), TicketServiceImpl.class);
 
         return this.entityToResponse(ticketPersisted);
     }

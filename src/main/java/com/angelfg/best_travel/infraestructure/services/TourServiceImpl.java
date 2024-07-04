@@ -8,6 +8,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TourRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
+import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.infraestructure.helpers.TourHelper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class TourServiceImpl implements TourService {
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
+    private final CustomerHelper customerHelper;
 
     @Override
     public void removeTicket(Long tourId, UUID ticketId) {
@@ -84,6 +86,8 @@ public class TourServiceImpl implements TourService {
                 .build();
 
         TourEntity tourSaved = this.tourRepository.save(tourToSave);
+
+        this.customerHelper.increase(customer.getDni(), TourServiceImpl.class);
 
         return TourResponse.builder()
                 .id(tourSaved.getId())

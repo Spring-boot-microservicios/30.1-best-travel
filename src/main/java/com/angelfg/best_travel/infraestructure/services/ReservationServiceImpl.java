@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.ReservationRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
+import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
+    private final CustomerHelper customerHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -50,6 +52,8 @@ public class ReservationServiceImpl implements ReservationService {
                 .build();
 
         ReservationEntity reservationPersistend = this.reservationRepository.save(reservationToPersist);
+
+        this.customerHelper.increase(customer.getDni(), ReservationServiceImpl.class);
 
         return this.entityToResponse(reservationPersistend);
     }
