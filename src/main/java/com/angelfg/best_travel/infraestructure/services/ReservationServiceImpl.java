@@ -11,11 +11,11 @@ import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.ReservationRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,6 +23,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+// @Transactional(propagation = Propagation.MANDATORY) // Siempre debe haber una transaccion abierta sino manda excepcion
+// @Transactional(propagation = Propagation.REQUIRES_NEW) // Tenemos 4 queries en create, se genera cada transaccion
+// @Transactional(propagation = Propagation.NESTED) // Hace solo una transaccion de las 4 queries
+// @Transactional(noRollbackFor = Exception.class) // No hace rollback si surge una excepcion de este tipo
+// @Transactional(readOnly = true) // Solo permite solo lectura
 @Transactional
 @AllArgsConstructor
 @Slf4j

@@ -10,7 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.TourRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.infraestructure.helpers.TourHelper;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -5,7 +5,7 @@ import com.angelfg.best_travel.domain.entities.FlyEntity;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
 import com.angelfg.best_travel.util.enums.SortType;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @AllArgsConstructor
 @Slf4j
 public class FlyServiceImpl implements FlyService {
