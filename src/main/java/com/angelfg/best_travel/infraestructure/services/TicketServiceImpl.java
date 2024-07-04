@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TicketRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
+import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.util.BestTravelUtil;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,12 @@ public class TicketServiceImpl implements TicketService {
     private final CustomerRepository customerRepository;
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
     @Override
     public TicketResponse create(TicketRequest request) {
+        this.blackListHelper.isInBlackListCustomer(request.getIdClient());
+
         FlyEntity fly = this.flyRepository
                 .findById(request.getIdFly())
                 .orElseThrow();

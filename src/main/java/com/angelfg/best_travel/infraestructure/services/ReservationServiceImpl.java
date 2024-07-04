@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.ReservationRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
+import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
 import lombok.AllArgsConstructor;
@@ -40,9 +41,12 @@ public class ReservationServiceImpl implements ReservationService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
+        this.blackListHelper.isInBlackListCustomer(request.getIdClient());
+
         HotelEntity hotel = this.hotelRepository.findById(request.getIdHotel()).orElseThrow(() -> new IdNotFoundException("hotel"));
         CustomerEntity customer = this.customerRepository.findById(request.getIdClient()).orElseThrow(() -> new IdNotFoundException("customer"));
 

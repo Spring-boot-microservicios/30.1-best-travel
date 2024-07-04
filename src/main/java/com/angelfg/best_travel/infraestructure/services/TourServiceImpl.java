@@ -8,12 +8,13 @@ import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TourRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
+import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.infraestructure.helpers.TourHelper;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class TourServiceImpl implements TourService {
     private final CustomerRepository customerRepository;
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
+    private final BlackListHelper blackListHelper;
 
     @Override
     public void removeTicket(Long tourId, UUID ticketId) {
@@ -71,6 +73,8 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public TourResponse create(TourRequest request) {
+        this.blackListHelper.isInBlackListCustomer(request.getCustomerId());
+
         CustomerEntity customer = this.customerRepository.findById(request.getCustomerId()).orElseThrow();
 
         HashSet<FlyEntity> flights = new HashSet<>();
