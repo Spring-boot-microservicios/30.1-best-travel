@@ -3,6 +3,7 @@ package com.angelfg.best_travel.api.controllers;
 import com.angelfg.best_travel.api.dtos.request.ReservationRequest;
 import com.angelfg.best_travel.api.dtos.response.ReservationResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "reservation")
 @AllArgsConstructor
+@Tag(name = "Reservation")
 public class ReservationController {
 
     private final ReservationService reservationService;

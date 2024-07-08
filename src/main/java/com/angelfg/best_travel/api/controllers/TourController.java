@@ -4,6 +4,7 @@ import com.angelfg.best_travel.api.dtos.request.TourRequest;
 import com.angelfg.best_travel.api.dtos.response.TourResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "tour")
 @AllArgsConstructor
+@Tag(name = "Tour")
 public class TourController {
 
     private final TourService tourService;

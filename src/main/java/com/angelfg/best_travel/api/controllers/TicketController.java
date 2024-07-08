@@ -3,6 +3,7 @@ package com.angelfg.best_travel.api.controllers;
 import com.angelfg.best_travel.api.dtos.request.TicketRequest;
 import com.angelfg.best_travel.api.dtos.response.TicketResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "ticket")
 @AllArgsConstructor
+@Tag(name = "Ticket")
 public class TicketController {
 
     private final TicketService ticketService;
