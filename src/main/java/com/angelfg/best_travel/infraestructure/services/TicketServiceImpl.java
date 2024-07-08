@@ -13,6 +13,8 @@ import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
 import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.util.BestTravelUtil;
+import com.angelfg.best_travel.util.enums.Tables;
+import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,11 +45,11 @@ public class TicketServiceImpl implements TicketService {
 
         FlyEntity fly = this.flyRepository
                 .findById(request.getIdFly())
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
 
         CustomerEntity customer = this.customerRepository
                 .findById(request.getIdClient())
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
         TicketEntity ticketToPersist = TicketEntity.builder()
                 .id(UUID.randomUUID())
@@ -71,18 +73,18 @@ public class TicketServiceImpl implements TicketService {
     public TicketResponse read(UUID uuid) {
         TicketEntity ticketFromDB = this.ticketRepository
                 .findById(uuid)
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
 
         return this.entityToResponse(ticketFromDB);
     }
 
     @Override
     public TicketResponse update(TicketRequest request, UUID id) {
-        TicketEntity ticketToUpdate = this.ticketRepository.findById(id).orElseThrow();
+        TicketEntity ticketToUpdate = this.ticketRepository.findById(id).orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
 
         FlyEntity fly = this.flyRepository
                 .findById(request.getIdFly())
-                .orElseThrow();
+                .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
 
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
@@ -98,13 +100,13 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void delete(UUID id) {
-        TicketEntity ticketToDelete = this.ticketRepository.findById(id).orElseThrow();
+        TicketEntity ticketToDelete = this.ticketRepository.findById(id).orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
         this.ticketRepository.delete(ticketToDelete);
     }
 
     @Override
     public BigDecimal findPrice(Long flyId) {
-        FlyEntity fly = this.flyRepository.findById(flyId).orElseThrow();
+        FlyEntity fly = this.flyRepository.findById(flyId).orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
         return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)); // porcentaje
     }
 

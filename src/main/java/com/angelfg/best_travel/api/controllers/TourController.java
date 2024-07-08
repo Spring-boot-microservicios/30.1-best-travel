@@ -3,6 +3,7 @@ package com.angelfg.best_travel.api.controllers;
 import com.angelfg.best_travel.api.dtos.request.TourRequest;
 import com.angelfg.best_travel.api.dtos.response.TourResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class TourController {
     private final TourService tourService;
 
     @PostMapping
-    public ResponseEntity<TourResponse> post(@RequestBody TourRequest request) {
+    public ResponseEntity<TourResponse> post(@Valid @RequestBody TourRequest request) {
         return ResponseEntity.ok(this.tourService.create(request));
     }
 

@@ -3,6 +3,7 @@ package com.angelfg.best_travel.api.controllers;
 import com.angelfg.best_travel.api.dtos.request.TicketRequest;
 import com.angelfg.best_travel.api.dtos.response.TicketResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping
-    public ResponseEntity<TicketResponse> create(@RequestBody TicketRequest ticketRequest) {
+    public ResponseEntity<TicketResponse> create(@Valid @RequestBody TicketRequest ticketRequest) {
         return ResponseEntity.ok(this.ticketService.create(ticketRequest));
     }
 
@@ -31,7 +32,7 @@ public class TicketController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<TicketResponse> put(@PathVariable UUID id, @RequestBody TicketRequest ticketRequest) {
+    public ResponseEntity<TicketResponse> put(@Valid @PathVariable UUID id, @RequestBody TicketRequest ticketRequest) {
         return ResponseEntity.ok(this.ticketService.update(ticketRequest, id));
     }
 
