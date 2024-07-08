@@ -1,9 +1,13 @@
 package com.angelfg.best_travel.api.controllers;
 
 import com.angelfg.best_travel.api.dtos.request.TourRequest;
+import com.angelfg.best_travel.api.dtos.response.ErrorsResponse;
 import com.angelfg.best_travel.api.dtos.response.TourResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,6 +26,13 @@ public class TourController {
 
     private final TourService tourService;
 
+    @ApiResponse(
+        responseCode = "400",
+        description = "When the request have a field invalid we response this",
+        content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorsResponse.class))
+        }
+    )
     @Operation(summary = "Save in system one tour based in list of hotels and flights")
     @PostMapping
     public ResponseEntity<TourResponse> post(@Valid @RequestBody TourRequest request) {
