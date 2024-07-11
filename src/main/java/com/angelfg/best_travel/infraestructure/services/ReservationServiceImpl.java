@@ -10,6 +10,8 @@ import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.ReservationRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
+import com.angelfg.best_travel.infraestructure.dtos.CurrencyDTO;
+import com.angelfg.best_travel.infraestructure.helpers.ApiCurrencyConnectorHelper;
 import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
 import com.angelfg.best_travel.util.enums.Tables;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.UUID;
 
 @Service
@@ -43,6 +46,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
+    private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -102,9 +106,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public BigDecimal findPrice(Long hotelId) {
+    public BigDecimal findPrice(Long hotelId, Currency currency) {
         HotelEntity hotelEntity = this.hotelRepository.findById(hotelId).orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
-        return hotelEntity.getPrice().add(hotelEntity.getPrice().multiply(charges_price_percentage));
+        BigDecimal priceInDollars = hotelEntity.getPrice().add(hotelEntity.getPrice().multiply(charges_price_percentage));
+
+        if (currency.equals(Currency.getInstance("USD"))) return priceInDollars;
+
+        CurrencyDTO currencyDTO = this.apiCurrencyConnectorHelper.getCurrency(currency);
+        log.info("API currency in {}, response: {}", currencyDTO.getExchangeDate().toString(), currencyDTO.getRates());
+
+        return priceInDollars.multiply(currencyDTO.getRates().get(currency));
     }
 
     // Realizar el mapeo entre entities a dtos
