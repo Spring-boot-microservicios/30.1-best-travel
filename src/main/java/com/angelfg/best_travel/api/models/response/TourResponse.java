@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.api.dtos.response;
+package com.angelfg.best_travel.api.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.infraestructure.services;
 
-import com.angelfg.best_travel.api.dtos.response.HotelResponse;
+import com.angelfg.best_travel.api.models.response.HotelResponse;
 import com.angelfg.best_travel.domain.entities.HotelEntity;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.HotelService;

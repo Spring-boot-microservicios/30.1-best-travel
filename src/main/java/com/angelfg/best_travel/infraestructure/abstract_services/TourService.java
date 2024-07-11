@@ -1,7 +1,7 @@
 package com.angelfg.best_travel.infraestructure.abstract_services;
 
-import com.angelfg.best_travel.api.dtos.request.TourRequest;
-import com.angelfg.best_travel.api.dtos.response.TourResponse;
+import com.angelfg.best_travel.api.models.request.TourRequest;
+import com.angelfg.best_travel.api.models.response.TourResponse;
 
 import java.util.UUID;
 

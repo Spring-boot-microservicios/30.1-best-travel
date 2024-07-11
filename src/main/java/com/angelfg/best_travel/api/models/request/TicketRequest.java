@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.api.dtos.request;
+package com.angelfg.best_travel.api.models.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TourHotelRequest implements Serializable {
-    private Long id;
-    private Integer totalDays;
+public class TicketRequest implements Serializable {
+    private String idClient;
+    private Long idFly;
 }

@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.api.dtos.request;
+package com.angelfg.best_travel.api.models.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

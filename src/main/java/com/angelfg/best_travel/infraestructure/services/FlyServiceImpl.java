@@ -1,10 +1,11 @@
 package com.angelfg.best_travel.infraestructure.services;
 
-import com.angelfg.best_travel.api.dtos.response.FlyResponse;
+import com.angelfg.best_travel.api.models.response.FlyResponse;
 import com.angelfg.best_travel.domain.entities.FlyEntity;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
 import com.angelfg.best_travel.util.enums.SortType;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -25,6 +27,13 @@ import java.util.stream.Collectors;
 public class FlyServiceImpl implements FlyService {
 
     private final FlyRepository flyRepository;
+    private final WebClient webClient;
+
+    // @Qualifier(value = "base") => para inyectarme eew client
+//    public FlyServiceImpl(FlyRepository flyRepository, @Qualifier(value = "base") WebClient webClient) {
+//        this.flyRepository = flyRepository;
+//        this.webClient = webClient;
+//    }
 
     @Override
     public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {

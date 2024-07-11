@@ -1,8 +1,8 @@
 package com.angelfg.best_travel.api.controllers;
 
-import com.angelfg.best_travel.api.dtos.request.TicketRequest;
-import com.angelfg.best_travel.api.dtos.response.ErrorsResponse;
-import com.angelfg.best_travel.api.dtos.response.TicketResponse;
+import com.angelfg.best_travel.api.models.request.TicketRequest;
+import com.angelfg.best_travel.api.models.response.ErrorsResponse;
+import com.angelfg.best_travel.api.models.response.TicketResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

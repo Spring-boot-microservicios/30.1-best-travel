@@ -1,7 +1,7 @@
 package com.angelfg.best_travel.api.controllers.error_handler;
 
-import com.angelfg.best_travel.api.dtos.response.BaseErrorResponse;
-import com.angelfg.best_travel.api.dtos.response.ErrorResponse;
+import com.angelfg.best_travel.api.models.response.BaseErrorResponse;
+import com.angelfg.best_travel.api.models.response.ErrorResponse;
 import com.angelfg.best_travel.util.exceptions.ForbiddenCustomerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

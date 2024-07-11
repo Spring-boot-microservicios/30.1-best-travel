@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.infraestructure.abstract_services;
 
-import com.angelfg.best_travel.api.dtos.response.HotelResponse;
+import com.angelfg.best_travel.api.models.response.HotelResponse;
 
 import java.util.Set;
 

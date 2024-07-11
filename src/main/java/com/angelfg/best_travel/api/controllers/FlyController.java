@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.api.controllers;
 
-import com.angelfg.best_travel.api.dtos.response.FlyResponse;
+import com.angelfg.best_travel.api.models.response.FlyResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
 import com.angelfg.best_travel.util.enums.SortType;
 import io.swagger.v3.oas.annotations.tags.Tag;

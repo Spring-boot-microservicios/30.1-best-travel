@@ -1,8 +1,8 @@
 package com.angelfg.best_travel.api.controllers;
 
-import com.angelfg.best_travel.api.dtos.request.ReservationRequest;
-import com.angelfg.best_travel.api.dtos.response.ErrorsResponse;
-import com.angelfg.best_travel.api.dtos.response.ReservationResponse;
+import com.angelfg.best_travel.api.models.request.ReservationRequest;
+import com.angelfg.best_travel.api.models.response.ErrorsResponse;
+import com.angelfg.best_travel.api.models.response.ReservationResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

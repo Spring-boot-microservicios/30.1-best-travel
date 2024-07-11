@@ -1,8 +1,6 @@
-package com.angelfg.best_travel.api.dtos.response;
+package com.angelfg.best_travel.api.models.response;
 
-import com.angelfg.best_travel.domain.entities.HotelEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

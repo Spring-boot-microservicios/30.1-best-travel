@@ -1,8 +1,8 @@
 package com.angelfg.best_travel.infraestructure.services;
 
-import com.angelfg.best_travel.api.dtos.request.TicketRequest;
-import com.angelfg.best_travel.api.dtos.response.FlyResponse;
-import com.angelfg.best_travel.api.dtos.response.TicketResponse;
+import com.angelfg.best_travel.api.models.request.TicketRequest;
+import com.angelfg.best_travel.api.models.response.FlyResponse;
+import com.angelfg.best_travel.api.models.response.TicketResponse;
 import com.angelfg.best_travel.domain.entities.CustomerEntity;
 import com.angelfg.best_travel.domain.entities.FlyEntity;
 import com.angelfg.best_travel.domain.entities.TicketEntity;

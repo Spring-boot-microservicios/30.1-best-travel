@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.api.dtos.response;
+package com.angelfg.best_travel.api.models.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

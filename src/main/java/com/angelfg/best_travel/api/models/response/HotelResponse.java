@@ -1,6 +1,5 @@
-package com.angelfg.best_travel.api.dtos.response;
+package com.angelfg.best_travel.api.models.response;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,8 +1,8 @@
 package com.angelfg.best_travel.infraestructure.services;
 
-import com.angelfg.best_travel.api.dtos.request.ReservationRequest;
-import com.angelfg.best_travel.api.dtos.response.HotelResponse;
-import com.angelfg.best_travel.api.dtos.response.ReservationResponse;
+import com.angelfg.best_travel.api.models.request.ReservationRequest;
+import com.angelfg.best_travel.api.models.response.HotelResponse;
+import com.angelfg.best_travel.api.models.response.ReservationResponse;
 import com.angelfg.best_travel.domain.entities.CustomerEntity;
 import com.angelfg.best_travel.domain.entities.HotelEntity;
 import com.angelfg.best_travel.domain.entities.ReservationEntity;

@@ -1,7 +1,7 @@
 package com.angelfg.best_travel.infraestructure.abstract_services;
 
-import com.angelfg.best_travel.api.dtos.request.ReservationRequest;
-import com.angelfg.best_travel.api.dtos.response.ReservationResponse;
+import com.angelfg.best_travel.api.models.request.ReservationRequest;
+import com.angelfg.best_travel.api.models.response.ReservationResponse;
 
 import java.math.BigDecimal;
 import java.util.UUID;
