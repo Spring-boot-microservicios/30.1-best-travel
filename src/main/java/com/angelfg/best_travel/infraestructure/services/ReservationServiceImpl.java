@@ -14,6 +14,7 @@ import com.angelfg.best_travel.infraestructure.dtos.CurrencyDTO;
 import com.angelfg.best_travel.infraestructure.helpers.ApiCurrencyConnectorHelper;
 import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
+import com.angelfg.best_travel.infraestructure.helpers.EmailHelper;
 import com.angelfg.best_travel.util.enums.Tables;
 import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -47,6 +49,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
     private final ApiCurrencyConnectorHelper apiCurrencyConnectorHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public ReservationResponse create(ReservationRequest request) {
@@ -69,6 +72,8 @@ public class ReservationServiceImpl implements ReservationService {
         ReservationEntity reservationPersistend = this.reservationRepository.save(reservationToPersist);
 
         this.customerHelper.increase(customer.getDni(), ReservationServiceImpl.class);
+
+        if (Objects.nonNull(request.getEmail())) this.emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.reservation.name());
 
         return this.entityToResponse(reservationPersistend);
     }

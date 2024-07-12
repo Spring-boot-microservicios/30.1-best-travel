@@ -10,6 +10,7 @@ import com.angelfg.best_travel.domain.repositories.jpa.TourRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TourService;
 import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
+import com.angelfg.best_travel.infraestructure.helpers.EmailHelper;
 import com.angelfg.best_travel.infraestructure.helpers.TourHelper;
 import com.angelfg.best_travel.util.enums.Tables;
 import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,7 @@ public class TourServiceImpl implements TourService {
     private final TourHelper tourHelper;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public void removeTicket(Long tourId, UUID ticketId) {
@@ -94,6 +97,8 @@ public class TourServiceImpl implements TourService {
         TourEntity tourSaved = this.tourRepository.save(tourToSave);
 
         this.customerHelper.increase(customer.getDni(), TourServiceImpl.class);
+
+        if (Objects.nonNull(request.getEmail())) this.emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.tour.name());
 
         return TourResponse.builder()
                 .id(tourSaved.getId())

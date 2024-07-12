@@ -12,17 +12,19 @@ import com.angelfg.best_travel.domain.repositories.jpa.TicketRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.TicketService;
 import com.angelfg.best_travel.infraestructure.helpers.BlackListHelper;
 import com.angelfg.best_travel.infraestructure.helpers.CustomerHelper;
+import com.angelfg.best_travel.infraestructure.helpers.EmailHelper;
 import com.angelfg.best_travel.util.BestTravelUtil;
 import com.angelfg.best_travel.util.enums.Tables;
 import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -38,6 +40,7 @@ public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final CustomerHelper customerHelper;
     private final BlackListHelper blackListHelper;
+    private final EmailHelper emailHelper;
 
     @Override
     public TicketResponse create(TicketRequest request) {
@@ -65,6 +68,8 @@ public class TicketServiceImpl implements TicketService {
         log.info("Ticket saved with id: {}", ticketPersisted.getId());
 
         this.customerHelper.increase(customer.getDni(), TicketServiceImpl.class);
+
+        if (Objects.nonNull(request.getEmail())) this.emailHelper.sendMail(request.getEmail(), customer.getFullName(), Tables.ticket.name());
 
         return this.entityToResponse(ticketPersisted);
     }
