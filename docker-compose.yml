@@ -14,3 +14,14 @@ services:
       - POSTGRES_PASSWORD=angelfgdev
     ports:
       - "5432:5432"
+
+  # Para ingresar en consola de redis
+  # Acceder redis-cli
+  # AUTH angelfg
+  cache-redis-db:
+    image: redis:6.2-alpine
+    container_name: best_travel_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --loglevel warning --requirepass angelfg
