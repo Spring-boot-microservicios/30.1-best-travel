@@ -2,7 +2,7 @@ package com.angelfg.best_travel.infraestructure.services;
 
 import com.angelfg.best_travel.api.models.request.TourRequest;
 import com.angelfg.best_travel.api.models.response.TourResponse;
-import com.angelfg.best_travel.domain.entities.*;
+import com.angelfg.best_travel.domain.entities.jpa.*;
 import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.HotelRepository;

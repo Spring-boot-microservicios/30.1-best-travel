@@ -6,5 +6,5 @@ public class CacheConstants {
 
     // Pagina para saber el tiempo => https://crontab.cronhub.io/
     // 0 0/1 * * * * => Expresion es de ejecucion cada minuto
-    public static final String SCHEDULED_RESET_CACHE = "0 0 0 * * * ?"; // cada 12 am o media noche
+    public static final String SCHEDULED_RESET_CACHE = "0 0 0 * * ?"; // cada 12 am o media noche
 }

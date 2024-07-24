@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.infraestructure.helpers;
 
-import com.angelfg.best_travel.domain.entities.CustomerEntity;
+import com.angelfg.best_travel.domain.entities.jpa.CustomerEntity;
 import com.angelfg.best_travel.domain.repositories.jpa.CustomerRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

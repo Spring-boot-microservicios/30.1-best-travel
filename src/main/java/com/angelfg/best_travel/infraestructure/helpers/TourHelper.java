@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.infraestructure.helpers;
 
-import com.angelfg.best_travel.domain.entities.*;
+import com.angelfg.best_travel.domain.entities.jpa.*;
 import com.angelfg.best_travel.domain.repositories.jpa.ReservationRepository;
 import com.angelfg.best_travel.domain.repositories.jpa.TicketRepository;
 import com.angelfg.best_travel.util.BestTravelUtil;

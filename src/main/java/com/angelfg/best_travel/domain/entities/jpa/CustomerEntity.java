@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.domain.entities;
+package com.angelfg.best_travel.domain.entities.jpa;
 
 import jakarta.persistence.*;
 import lombok.*;

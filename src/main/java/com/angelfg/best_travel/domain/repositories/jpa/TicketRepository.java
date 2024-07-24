@@ -1,6 +1,6 @@
 package com.angelfg.best_travel.domain.repositories.jpa;
 
-import com.angelfg.best_travel.domain.entities.TicketEntity;
+import com.angelfg.best_travel.domain.entities.jpa.TicketEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

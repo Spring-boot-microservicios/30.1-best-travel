@@ -1,7 +1,7 @@
 package com.angelfg.best_travel.infraestructure.services;
 
 import com.angelfg.best_travel.api.models.response.FlyResponse;
-import com.angelfg.best_travel.domain.entities.FlyEntity;
+import com.angelfg.best_travel.domain.entities.jpa.FlyEntity;
 import com.angelfg.best_travel.domain.repositories.jpa.FlyRepository;
 import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
 import com.angelfg.best_travel.util.constants.CacheConstants;

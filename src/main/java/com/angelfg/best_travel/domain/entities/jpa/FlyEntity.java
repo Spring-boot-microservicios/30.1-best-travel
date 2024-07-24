@@ -1,4 +1,4 @@
-package com.angelfg.best_travel.domain.entities;
+package com.angelfg.best_travel.domain.entities.jpa;
 
 import com.angelfg.best_travel.util.enums.AeroLine;
 import jakarta.persistence.*;

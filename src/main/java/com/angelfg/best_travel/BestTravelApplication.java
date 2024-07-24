@@ -1,7 +1,8 @@
 package com.angelfg.best_travel;
 
-import com.angelfg.best_travel.domain.entities.*;
+import com.angelfg.best_travel.domain.entities.jpa.*;
 import com.angelfg.best_travel.domain.repositories.jpa.*;
+import com.angelfg.best_travel.domain.repositories.mongo.AppUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -25,6 +25,7 @@ public class BestTravelApplication implements CommandLineRunner {
 	private final ReservationRepository reservationRepository;
 	private final TourRepository tourRepository;
 	private final CustomerRepository customerRepository;
+	private final AppUserRepository appUserRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BestTravelApplication.class, args);
@@ -70,6 +71,9 @@ public class BestTravelApplication implements CommandLineRunner {
 //		System.out.println(hotelEntity);
 
 //		addTourComplete();
+
+		// MONGO
+		this.appUserRepository.findAll().forEach(System.out::println);
 
 	}
 
