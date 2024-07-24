@@ -1,5 +1,6 @@
 package com.angelfg.best_travel;
 
+import com.angelfg.best_travel.domain.entities.documents.AppUserDocument;
 import com.angelfg.best_travel.domain.entities.jpa.*;
 import com.angelfg.best_travel.domain.repositories.jpa.*;
 import com.angelfg.best_travel.domain.repositories.mongo.AppUserRepository;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -74,7 +76,7 @@ public class BestTravelApplication implements CommandLineRunner {
 
 		// MONGO
 		this.appUserRepository.findAll().forEach(System.out::println);
-
+		System.out.println("USER::: " + this.appUserRepository.findByUsername("ragnar777").orElseThrow());
 	}
 
 	private void addTourComplete() throws InterruptedException {
