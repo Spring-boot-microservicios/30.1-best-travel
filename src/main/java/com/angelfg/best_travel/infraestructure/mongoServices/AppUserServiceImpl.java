@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -31,12 +31,12 @@ public class AppUserServiceImpl implements ModifyUserService {
     }
 
     @Override
-    public Map<String, List<String>> addRole(String username, String role) {
+    public Map<String, Set<String>> addRole(String username, String role) {
         AppUserDocument user = this.appUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(COLLECTION_NAME));
         user.getRole().getGrantedAuthorities().add(role);
 
         AppUserDocument userSaved = this.appUserRepository.save(user);
-        List<String> authorities = userSaved.getRole().getGrantedAuthorities();
+        Set<String> authorities = userSaved.getRole().getGrantedAuthorities();
 
         log.info("User {} add role {}", userSaved.getUsername(), userSaved.getRole().getGrantedAuthorities().toString());
 
@@ -44,12 +44,12 @@ public class AppUserServiceImpl implements ModifyUserService {
     }
 
     @Override
-    public Map<String, List<String>> removeRole(String username, String role) {
+    public Map<String, Set<String>> removeRole(String username, String role) {
         AppUserDocument user = this.appUserRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(COLLECTION_NAME));
         user.getRole().getGrantedAuthorities().remove(role);
 
         AppUserDocument userSaved = this.appUserRepository.save(user);
-        List<String> authorities = userSaved.getRole().getGrantedAuthorities();
+        Set<String> authorities = userSaved.getRole().getGrantedAuthorities();
 
         log.info("User {} remove role {}", userSaved.getUsername(), userSaved.getRole().getGrantedAuthorities().toString());
 

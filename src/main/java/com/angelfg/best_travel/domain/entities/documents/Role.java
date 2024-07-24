@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,5 +16,5 @@ import java.util.List;
 public class Role implements Serializable {
 
     @Field(name = "granted_authorities") // Equivalente a @Column
-    private List<String> grantedAuthorities;
+    private Set<String> grantedAuthorities;
 }

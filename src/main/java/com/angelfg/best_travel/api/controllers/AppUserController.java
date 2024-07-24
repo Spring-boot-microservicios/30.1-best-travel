@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping(path = "user")
@@ -29,13 +29,13 @@ public class AppUserController {
 
     @Operation(summary = "Add role user")
     @PatchMapping(path = "add-role")
-    public ResponseEntity<Map<String, List<String>>> addRole(@RequestParam String username, @RequestParam String role) {
+    public ResponseEntity<Map<String, Set<String>>> addRole(@RequestParam String username, @RequestParam String role) {
         return ResponseEntity.ok(this.modifyUserService.addRole(username, role));
     }
 
     @Operation(summary = "Add role user")
     @PatchMapping(path = "remove-role")
-    public ResponseEntity<Map<String, List<String>>> removeRole(@RequestParam String username, @RequestParam String role) {
+    public ResponseEntity<Map<String, Set<String>>> removeRole(@RequestParam String username, @RequestParam String role) {
         return ResponseEntity.ok(this.modifyUserService.removeRole(username, role));
     }
 
