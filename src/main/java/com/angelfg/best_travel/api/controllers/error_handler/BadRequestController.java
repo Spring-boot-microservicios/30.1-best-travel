@@ -4,6 +4,7 @@ import com.angelfg.best_travel.api.models.response.BaseErrorResponse;
 import com.angelfg.best_travel.api.models.response.ErrorResponse;
 import com.angelfg.best_travel.api.models.response.ErrorsResponse;
 import com.angelfg.best_travel.util.exceptions.IdNotFoundException;
+import com.angelfg.best_travel.util.exceptions.UsernameNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,8 +19,8 @@ import java.util.List;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestController {
 
-    @ExceptionHandler(IdNotFoundException.class)
-    public BaseErrorResponse handleIdNotFound(IdNotFoundException exception) {
+    @ExceptionHandler({ IdNotFoundException.class, UsernameNotFoundException.class })
+    public BaseErrorResponse handleIdNotFound(RuntimeException exception) { // Uso de polimorfismo
 
         return ErrorResponse.builder()
                 .error(exception.getMessage())
