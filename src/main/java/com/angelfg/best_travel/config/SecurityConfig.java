@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -24,6 +25,10 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
@@ -33,6 +38,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Configuration
@@ -180,6 +187,43 @@ public class SecurityConfig {
         return TokenSettings.builder()
             .refreshTokenTimeToLive(Duration.ofHours(8))
             .build();
+    }
+
+    // TODO: 13 - Quitar el prefijo de SCOPE_
+    @Bean
+    public JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter() {
+        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
+        converter.setAuthorityPrefix("");
+        return converter;
+    }
+
+    // TODO: 14 - Quitar el prefijo de SCOPE_
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter(JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter) {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return converter;
+    }
+
+    // TODO: 15 - Añadir claims al token
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> oAuth2TokenCustomizer() {
+
+        return context -> {
+
+            if (context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) { // validar el access_token
+
+                context.getClaims().claims(claim -> {
+                    claim.putAll(Map.of(
+                        "owner", APPLICATION_OWNER,
+                        "date_request", LocalDateTime.now().toString()
+                    ));
+                });
+
+            }
+
+        };
+
     }
 
     @Bean
