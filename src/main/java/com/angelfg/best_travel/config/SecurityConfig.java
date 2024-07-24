@@ -20,7 +20,7 @@ public class SecurityConfig {
     private static final String ROLE_ADMIN = "write";
     private static final String APPLICATION_OWNER = "Debuggeando ideas";
 
-    // 1 - Generamos el security filter
+    // TODO: 1 - Generamos el security filter
     @Bean
     private SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http); // Configuracion default de cors
