@@ -75,8 +75,8 @@ public class BestTravelApplication implements CommandLineRunner {
 //		addTourComplete();
 
 		// MONGO
-		this.appUserRepository.findAll().forEach(System.out::println);
-		System.out.println("USER::: " + this.appUserRepository.findByUsername("ragnar777").orElseThrow());
+//		this.appUserRepository.findAll().forEach(System.out::println);
+//		System.out.println("USER::: " + this.appUserRepository.findByUsername("ragnar777").orElseThrow());
 	}
 
 	private void addTourComplete() throws InterruptedException {
