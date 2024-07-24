@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,6 +29,8 @@ public class BestTravelApplication implements CommandLineRunner {
 	private final TourRepository tourRepository;
 	private final CustomerRepository customerRepository;
 	private final AppUserRepository appUserRepository;
+
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BestTravelApplication.class, args);
@@ -77,6 +80,9 @@ public class BestTravelApplication implements CommandLineRunner {
 		// MONGO
 //		this.appUserRepository.findAll().forEach(System.out::println);
 //		System.out.println("USER::: " + this.appUserRepository.findByUsername("ragnar777").orElseThrow());
+
+		// AUTH
+		// this.appUserRepository.findAll().forEach(user -> System.out.println(user.getUsername() + " - " + this.bCryptPasswordEncoder.encode(user.getPassword())));
 	}
 
 	private void addTourComplete() throws InterruptedException {
