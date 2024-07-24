@@ -79,6 +79,8 @@ public class AppUserServiceImpl implements ModifyUserService, UserDetailsService
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
 
+        System.out.println("Authorities from db " + authorities);
+
         return new User(
             user.getUsername(),
             user.getPassword(),
