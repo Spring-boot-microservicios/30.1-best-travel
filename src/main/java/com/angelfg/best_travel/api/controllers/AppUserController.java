@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-@RequestMapping(path = "user")
+@RequestMapping(path = "users")
 @AllArgsConstructor
-@Tag(name = "User")
+@Tag(name = "Users")
 public class AppUserController {
 
     private final ModifyUserService modifyUserService;

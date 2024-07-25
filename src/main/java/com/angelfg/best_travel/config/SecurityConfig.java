@@ -103,7 +103,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
                 .requestMatchers(USER_RESOURCES).authenticated()
-                .requestMatchers(ADMIN_RESOURCES).hasRole(ROLE_ADMIN)
+                .requestMatchers(ADMIN_RESOURCES).hasAnyAuthority(ROLE_ADMIN)
             )
             .oauth2ResourceServer(oauth -> oauth
                 .jwt(Customizer.withDefaults())
