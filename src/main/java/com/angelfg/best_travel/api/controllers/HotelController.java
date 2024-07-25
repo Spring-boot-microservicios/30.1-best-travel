@@ -2,7 +2,9 @@ package com.angelfg.best_travel.api.controllers;
 
 import com.angelfg.best_travel.api.models.response.HotelResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.HotelService;
+import com.angelfg.best_travel.util.annotations.Notify;
 import com.angelfg.best_travel.util.enums.SortType;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,8 @@ public class HotelController {
 
     private final HotelService hotelService;
 
+    @Notify(value = "GET hotel")
+    @Operation(summary = "Return a page with hotels can be sorted or not")
     @GetMapping
     public ResponseEntity<Page<HotelResponse>> getAll(
         @RequestParam(defaultValue = "0") Integer page,
@@ -32,6 +36,7 @@ public class HotelController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with hotels with price less to price in parameter")
     @GetMapping(path = "less_price")
     public ResponseEntity<Set<HotelResponse>> getLessPrice(
         @RequestParam BigDecimal price
@@ -40,6 +45,7 @@ public class HotelController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with hotels with between prices in parameters")
     @GetMapping(path = "between_price")
     public ResponseEntity<Set<HotelResponse>> getBetweenPrice(
         @RequestParam BigDecimal min,
@@ -49,6 +55,7 @@ public class HotelController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with hotels with ratting greater a parameter")
     @GetMapping(path = "rating")
     public ResponseEntity<Set<HotelResponse>> getByRaiting(
         @RequestParam Integer rating

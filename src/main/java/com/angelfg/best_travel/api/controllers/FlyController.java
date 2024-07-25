@@ -2,7 +2,9 @@ package com.angelfg.best_travel.api.controllers;
 
 import com.angelfg.best_travel.api.models.response.FlyResponse;
 import com.angelfg.best_travel.infraestructure.abstract_services.FlyService;
+import com.angelfg.best_travel.util.annotations.Notify;
 import com.angelfg.best_travel.util.enums.SortType;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ public class FlyController {
 
     private final FlyService flyService;
 
+    @Notify(value = "GET fly")
+    @Operation(summary = "Return a page with flights can be sorted or not")
     @GetMapping
     public ResponseEntity<Page<FlyResponse>> getAll(
         @RequestParam(defaultValue = "0") Integer page,
@@ -37,6 +41,7 @@ public class FlyController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with flights with price less to price in parameter")
     @GetMapping(path = "less_price")
     public ResponseEntity<Set<FlyResponse>> getLessPrice(
         @RequestParam BigDecimal price
@@ -45,6 +50,7 @@ public class FlyController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with flights with between prices in parameters")
     @GetMapping(path = "between_price")
     public ResponseEntity<Set<FlyResponse>> getBetweenPrice(
         @RequestParam BigDecimal min,
@@ -54,6 +60,7 @@ public class FlyController {
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Return a list with flights with between origin and destiny in parameters")
     @GetMapping(path = "origin_destiny")
     public ResponseEntity<Set<FlyResponse>> getByOriginDestiny(
         @RequestParam String origin,
