@@ -19,7 +19,7 @@ db.app_users.insert([
         "password": "$2a$10$P6MICmgs0K5clfkCU4NZseZYrCTKxOCkTSQgnIqkc2njUamiY4y.6",
         "role":
             {
-                "granted_authorities": ["read"]
+                "granted_authorities": ["ROLE_USER"]
             }
     },
     {
@@ -30,7 +30,7 @@ db.app_users.insert([
         "password": "$2a$10$Ncjn/PedW0ewTai7DDSeQO3WhLS86aKXMh9QH08ZbVpFAc8300cIK",
         "role":
             {
-                "granted_authorities": ["read"]
+                "granted_authorities": ["ROLE_USER"]
             }
     },
     {
@@ -41,7 +41,7 @@ db.app_users.insert([
         "password": "$2a$10$OvPWDXWX5lJ141fuM1U4KuSW7ihm0UhMvCpZ5zQ/ihl6TvyjY.uje",
         "role":
             {
-                "granted_authorities": ["read", "write"]
+                "granted_authorities": ["ROLE_USER", "ROLE_ADMIN"]
             }
     },
     {
@@ -52,7 +52,7 @@ db.app_users.insert([
         "password": "$2a$10$vFC2zVHNXJ6LVhR.llCvneUq8J4XZy1hEd8lBow6m5viIO7eaAkVm",
         "role":
             {
-                "granted_authorities": ["write"]
+                "granted_authorities": ["ROLE_ADMIN"]
             }
     }
 ]);

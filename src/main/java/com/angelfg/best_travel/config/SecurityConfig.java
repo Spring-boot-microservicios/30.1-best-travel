@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -49,7 +50,10 @@ public class SecurityConfig {
     private static final String[] USER_RESOURCES = {"/tour/**", "/ticket/**", "/reservation/**"};
     private static final String[] ADMIN_RESOURCES = {"/users/**"};
     private static final String LOGIN_RESOURCE = "/login";
-    private static final String ROLE_ADMIN = "write";
+    private static final String AUTH_WRITE = "write";
+    private static final String AUTH_READ = "read";
+    private static final String ROLE_ADMIN = "ADMIN";
+    private static final String ROLE_USER = "USER";
     private static final String APPLICATION_OWNER = "AngelDeveloper";
 
     @Value("${app.client.id}")
@@ -73,6 +77,7 @@ public class SecurityConfig {
 
     // TODO: 1 - Generamos el security filter
     @Bean
+    @Order(1) // Filtro de OAUTH
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http); // Configuracion default de cors
 
@@ -96,19 +101,34 @@ public class SecurityConfig {
 
     // TODO: 5 - Filtro de rutas publicas, privadas y con accesos
     @Bean
+    @Order(2) // Filtro que valida en la aplicacion
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
 
         http
             .csrf(Customizer.withDefaults())
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
-                .requestMatchers(USER_RESOURCES).authenticated()
-                .requestMatchers(ADMIN_RESOURCES).hasAnyAuthority(ROLE_ADMIN)
+                .requestMatchers(USER_RESOURCES).hasAuthority(AUTH_READ)
+                .requestMatchers(ADMIN_RESOURCES).hasAuthority(AUTH_WRITE)
             )
             .oauth2ResourceServer(oauth -> oauth
                 .jwt(Customizer.withDefaults())
             )
             .formLogin(Customizer.withDefaults());
+
+        return http.build();
+    }
+
+    // TODO: 16 - Filtro del usuario
+    @Bean
+    @Order(3) // Filtro de los usuarios por roles
+    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
+
+        http.authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(PUBLIC_RESOURCES).permitAll()
+            .requestMatchers(USER_RESOURCES).hasRole(ROLE_USER)
+            .requestMatchers(ADMIN_RESOURCES).hasRole(ROLE_ADMIN)
+        );
 
         return http.build();
     }
